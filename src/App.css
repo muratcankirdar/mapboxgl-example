@@ -24,9 +24,13 @@
 .map {
   grid-area: map;
   min-width: 800px;
-  min-height: 400px;
+  min-height: 600px;
 }
 
 .location {
   grid-area: location;
+}
+
+#menu > label {
+  margin-right: 0.5em;
 }

@@ -1,20 +1,20 @@
 import '../App.css';
 import { useDispatch } from 'react-redux';
-import { setCursor } from '../store/map';
+import { setCursor, setLocationSelectionEnabled } from '../store/map';
 
-const LocationInfo = ({ onEnableMarker }) => {
+const LocationInfo = () => {
   const dispatch = useDispatch();
 
   const enableMarker = () => {
     dispatch(setCursor('crosshair'));
-    onEnableMarker();
+    dispatch(setLocationSelectionEnabled(true));
   };
 
   return (
     <>
       <div className="location">
         <p>Location info</p>
-        <button onClick={enableMarker}>Place marker</button>
+        <button onClick={enableMarker}>Enable Marker Selection</button>
       </div>
     </>
   );

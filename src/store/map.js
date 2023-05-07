@@ -1,11 +1,16 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  markers: [],
+  locations: [],
   isMapVisible: true,
-  isMarkerEnabled: false,
+  isLocationSelectionEnabled: false,
   theme: 'streets-v11',
   cursor: 'grab',
+  viewState: {
+    longitude: -122,
+    latitude: 37,
+    zoom: 3.5,
+  },
 };
 
 export const mapSlice = createSlice({
@@ -13,23 +18,19 @@ export const mapSlice = createSlice({
   initialState,
   reducers: {
     setTheme: (state, action) => {
-      // Redux Toolkit allows us to write "mutating" logic in reducers. It
-      // doesn't actually mutate the state because it uses the Immer library,
-      // which detects changes to a "draft state" and produces a brand new
-      // immutable state based off those changes
       state.theme = action.payload;
     },
-    addMarker: (state, action) => {
-      state.markers = [...state.markers, action.payload];
+    addLocation: (state, action) => {
+      state.locations = [...state.locations, action.payload];
     },
-    removeMarker: (state, action) => {
-      state.markers = state.markers.filter((marker) => marker !== action.payload);
+    removeLocation: (state, action) => {
+      state.locations = state.locations.filter((location) => location !== action.payload);
     },
     setCursor: (state, action) => {
       state.cursor = action.payload;
     },
-    setMarkerEnabled: (state, action) => {
-      state.isMarkerEnabled = action.payload;
+    setLocationSelectionEnabled: (state, action) => {
+      state.isLocationSelectionEnabled = action.payload;
     },
     setMapVisible: (state, action) => {
       state.isMapVisible = action.payload;
@@ -37,17 +38,21 @@ export const mapSlice = createSlice({
     toggleMapVisibility: (state) => {
       state.isMapVisible = !state.isMapVisible;
     },
+    setViewState: (state, action) => {
+      state.viewState = action.payload;
+    },
   },
 });
 
 export const {
   setTheme,
-  addMarker,
-  removeMarker,
+  addLocation,
+  removeLocation,
   setCursor,
-  setMarkerEnabled,
+  setLocationSelectionEnabled,
   setMapVisible,
   toggleMapVisibility,
+  setViewState,
 } = mapSlice.actions;
 
 export default mapSlice.reducer;

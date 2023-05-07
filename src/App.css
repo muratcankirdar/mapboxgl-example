@@ -19,6 +19,7 @@
 
 .header-buttons {
   grid-area: header;
+  margin-bottom: 2rem;
 }
 
 .map {

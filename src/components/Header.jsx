@@ -1,5 +1,5 @@
 import { useDispatch } from 'react-redux';
-import { toggleMapVisibility, setTheme } from '../store/map.js';
+import { toggleMapVisibility, setTheme, setViewState } from '../store/map.js';
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -8,9 +8,21 @@ const Header = () => {
     dispatch(setTheme(e.target.id));
   };
 
+  const showWhiteHouse = () => {
+    dispatch(
+      setViewState({
+        longitude: -77.03656,
+        latitude: 38.897957,
+        zoom: 14,
+      })
+    );
+  };
+
   return (
     <div className="header-buttons">
       <button onClick={() => dispatch(toggleMapVisibility())}>Toggle Map</button>
+
+      <button onClick={showWhiteHouse}>Show White House</button>
 
       <div id="menu" onChange={handleThemeChange}>
         <input

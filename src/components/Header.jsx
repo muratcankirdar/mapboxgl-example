@@ -1,28 +1,53 @@
+import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { toggleMapVisibility, setTheme, setViewState } from '../store/map.js';
+import { toggleMapVisibility, setTheme, setViewState, resetViewState } from '../store/map.js';
+import locations from '../static/locations.js';
+import Select from 'react-select';
 
 const Header = () => {
+  const [location, setLocation] = useState(null);
   const dispatch = useDispatch();
 
   const handleThemeChange = (e) => {
     dispatch(setTheme(e.target.id));
   };
 
-  const showWhiteHouse = () => {
+  const handleLocationSelect = (item) => {
+    setLocation(item);
+
     dispatch(
       setViewState({
-        longitude: -77.03656,
-        latitude: 38.897957,
+        longitude: item.longitude,
+        latitude: item.latitude,
         zoom: 14,
       })
     );
   };
 
+  const resetLocation = () => {
+    if (!location.id) return;
+
+    setLocation(null);
+    dispatch(resetViewState());
+  };
+
   return (
-    <div className="header-buttons">
+    <div className="header">
       <button onClick={() => dispatch(toggleMapVisibility())}>Toggle Map</button>
 
-      <button onClick={showWhiteHouse}>Show White House</button>
+      <div
+        style={{
+          margin: '10px 0',
+          display: 'grid',
+          gridTemplateColumns: '400px 100px',
+          alignItems: 'center',
+          gap: '10px',
+        }}
+      >
+        <Select value={location} onChange={handleLocationSelect} options={locations} />
+
+        <button onClick={resetLocation}>Reset</button>
+      </div>
 
       <div id="menu" onChange={handleThemeChange}>
         <input

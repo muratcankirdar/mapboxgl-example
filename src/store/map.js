@@ -7,9 +7,9 @@ const initialState = {
   theme: 'streets-v11',
   cursor: 'grab',
   viewState: {
-    longitude: -122,
+    longitude: -100,
     latitude: 37,
-    zoom: 3.5,
+    zoom: 3,
   },
 };
 
@@ -41,6 +41,9 @@ export const mapSlice = createSlice({
     setViewState: (state, action) => {
       state.viewState = action.payload;
     },
+    resetViewState: (state) => {
+      state.viewState = initialState.viewState;
+    },
   },
 });
 
@@ -53,6 +56,7 @@ export const {
   setMapVisible,
   toggleMapVisibility,
   setViewState,
+  resetViewState,
 } = mapSlice.actions;
 
 export default mapSlice.reducer;

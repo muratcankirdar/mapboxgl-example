@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useMemo, useRef } from 'react';
 import Map, { Marker, MapProvider } from 'react-map-gl';
 import { useSelector, useDispatch } from 'react-redux';
 import { addLocation, setLocationSelectionEnabled, setCursor, setViewState } from '../store/map.js';
@@ -7,6 +7,7 @@ const token =
   'pk.eyJ1IjoiY2FydG9kYmluYyIsImEiOiJja202bHN2OXMwcGYzMnFrbmNkMzVwMG5rIn0.Zb3J4JTdJS-oYNXlR3nvnQ';
 
 const SimpleMap = () => {
+  const mapRef = useRef(null);
   const locations = useSelector((state) => state.map.locations);
   const theme = useSelector((state) => state.map.theme);
   const cursor = useSelector((state) => state.map.cursor);
@@ -20,6 +21,13 @@ const SimpleMap = () => {
     const { lng, lat } = lngLat;
 
     if (isLocationSelectionEnabled) {
+      if (mapRef.current) {
+        mapRef.current.flyTo({
+          center: [lng, lat],
+          zoom: 14,
+        });
+      }
+
       dispatch(addLocation({ lat, lng }));
       dispatch(setLocationSelectionEnabled(false));
       dispatch(setCursor('grab'));
@@ -40,6 +48,7 @@ const SimpleMap = () => {
         <MapProvider>
           <Map
             {...viewState}
+            ref={mapRef}
             id="simpleMap"
             onMove={(evt) => dispatch(setViewState(evt.viewState))}
             cursor={cursor}

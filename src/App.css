@@ -22,6 +22,10 @@
   margin-bottom: 2rem;
 }
 
+.header > *:first-child {
+  margin-right: 1rem;
+}
+
 .map {
   grid-area: map;
   min-width: 800px;
@@ -34,4 +38,15 @@
 
 #menu > label {
   margin-right: 0.5em;
+}
+
+.location-info-buttons {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.location-info-buttons > * {
+  margin-bottom: 1rem;
 }

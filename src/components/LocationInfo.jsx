@@ -1,6 +1,6 @@
 import '../App.css';
 import { useDispatch } from 'react-redux';
-import { setCursor, setLocationSelectionEnabled } from '../store/map';
+import { setCursor, setLocationSelectionEnabled, resetViewState } from '../store/map';
 
 const LocationInfo = () => {
   const dispatch = useDispatch();
@@ -14,7 +14,10 @@ const LocationInfo = () => {
     <>
       <div className="location">
         <p>Location info</p>
-        <button onClick={enableMarker}>Enable Marker Selection</button>
+        <div className="location-info-buttons">
+          <button onClick={enableMarker}>Enable Marker Selection</button>
+          <button onClick={() => dispatch(resetViewState())}>Reset Map View</button>
+        </div>
       </div>
     </>
   );

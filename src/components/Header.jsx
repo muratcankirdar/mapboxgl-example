@@ -39,9 +39,7 @@ const Header = () => {
 
   return (
     <div className="header">
-      <button onClick={() => dispatch(toggleMapVisibility())} style={{ marginRight: '10px' }}>
-        Toggle Map
-      </button>
+      <button onClick={() => dispatch(toggleMapVisibility())}>Toggle Map</button>
       <button onClick={() => dispatch(toggleSourceVisibility())}>Toggle Source</button>
 
       <div

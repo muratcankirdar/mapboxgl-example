@@ -31,6 +31,21 @@ const SimpleMap = () => {
     },
   };
 
+  const preDefinedMarkers = [
+    {
+      lng: -97.45117187499973,
+      lat: 38.20977656490092,
+    },
+    {
+      lng: -123.55468749999977,
+      lat: 47.8183856206806,
+    },
+    {
+      lng: -81.01562499999959,
+      lat: 26.280699010657358,
+    },
+  ];
+
   const onMapClick = (e) => {
     const lngLat = e.lngLat;
     const { lng, lat } = lngLat;
@@ -39,7 +54,7 @@ const SimpleMap = () => {
       if (mapRef.current) {
         mapRef.current.flyTo({
           center: [lng, lat],
-          zoom: 14,
+          zoom: 8,
         });
       }
 
@@ -75,6 +90,10 @@ const SimpleMap = () => {
             hash={false}
           >
             {renderMarkers}
+
+            {preDefinedMarkers.map((marker, index) => (
+              <Marker key={index} longitude={marker.lng} latitude={marker.lat} />
+            ))}
 
             {isSourceVisible && (
               <Source id="my-data" type="geojson" data={geojson}>

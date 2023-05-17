@@ -1,8 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  locations: [],
+  markers: [],
   isMapVisible: true,
+  isSourceVisible: true,
   isLocationSelectionEnabled: false,
   theme: 'streets-v11',
   cursor: 'grab',
@@ -20,20 +21,14 @@ export const mapSlice = createSlice({
     setTheme: (state, action) => {
       state.theme = action.payload;
     },
-    addLocation: (state, action) => {
-      state.locations = [...state.locations, action.payload];
-    },
-    removeLocation: (state, action) => {
-      state.locations = state.locations.filter((location) => location !== action.payload);
+    addMarker: (state, action) => {
+      state.markers = [...state.markers, action.payload];
     },
     setCursor: (state, action) => {
       state.cursor = action.payload;
     },
     setLocationSelectionEnabled: (state, action) => {
       state.isLocationSelectionEnabled = action.payload;
-    },
-    setMapVisible: (state, action) => {
-      state.isMapVisible = action.payload;
     },
     toggleMapVisibility: (state) => {
       state.isMapVisible = !state.isMapVisible;
@@ -44,19 +39,21 @@ export const mapSlice = createSlice({
     resetViewState: (state) => {
       state.viewState = initialState.viewState;
     },
+    toggleSourceVisibility: (state) => {
+      state.isSourceVisible = !state.isSourceVisible;
+    },
   },
 });
 
 export const {
   setTheme,
-  addLocation,
-  removeLocation,
+  addMarker,
   setCursor,
   setLocationSelectionEnabled,
-  setMapVisible,
   toggleMapVisibility,
   setViewState,
   resetViewState,
+  toggleSourceVisibility,
 } = mapSlice.actions;
 
 export default mapSlice.reducer;

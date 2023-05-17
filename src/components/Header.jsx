@@ -1,6 +1,12 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { toggleMapVisibility, setTheme, setViewState, resetViewState } from '../store/map.js';
+import {
+  toggleMapVisibility,
+  setTheme,
+  setViewState,
+  resetViewState,
+  toggleSourceVisibility,
+} from '../store/map.js';
 import locations from '../static/locations.js';
 import Select from 'react-select';
 
@@ -33,7 +39,10 @@ const Header = () => {
 
   return (
     <div className="header">
-      <button onClick={() => dispatch(toggleMapVisibility())}>Toggle Map</button>
+      <button onClick={() => dispatch(toggleMapVisibility())} style={{ marginRight: '10px' }}>
+        Toggle Map
+      </button>
+      <button onClick={() => dispatch(toggleSourceVisibility())}>Toggle Source</button>
 
       <div
         style={{

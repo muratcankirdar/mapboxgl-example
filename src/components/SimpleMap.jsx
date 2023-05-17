@@ -1,20 +1,35 @@
 import { useMemo, useRef } from 'react';
-import Map, { Marker, MapProvider } from 'react-map-gl';
+import Map, { Marker, MapProvider, Source, Layer } from 'react-map-gl';
 import { useSelector, useDispatch } from 'react-redux';
-import { addLocation, setLocationSelectionEnabled, setCursor, setViewState } from '../store/map.js';
+import { addMarker, setLocationSelectionEnabled, setCursor, setViewState } from '../store/map.js';
 
 const token =
   'pk.eyJ1IjoiY2FydG9kYmluYyIsImEiOiJja202bHN2OXMwcGYzMnFrbmNkMzVwMG5rIn0.Zb3J4JTdJS-oYNXlR3nvnQ';
 
 const SimpleMap = () => {
   const mapRef = useRef(null);
-  const locations = useSelector((state) => state.map.locations);
+  const markers = useSelector((state) => state.map.markers);
   const theme = useSelector((state) => state.map.theme);
   const cursor = useSelector((state) => state.map.cursor);
   const isLocationSelectionEnabled = useSelector((state) => state.map.isLocationSelectionEnabled);
   const isMapVisible = useSelector((state) => state.map.isMapVisible);
+  const isSourceVisible = useSelector((state) => state.map.isSourceVisible);
   const viewState = useSelector((state) => state.map.viewState);
   const dispatch = useDispatch();
+
+  const geojson = {
+    type: 'FeatureCollection',
+    features: [{ type: 'Feature', geometry: { type: 'Point', coordinates: [-122.4, 37.8] } }],
+  };
+
+  const layerStyle = {
+    id: 'point',
+    type: 'circle',
+    paint: {
+      'circle-radius': 10,
+      'circle-color': '#007cbf',
+    },
+  };
 
   const onMapClick = (e) => {
     const lngLat = e.lngLat;
@@ -28,7 +43,7 @@ const SimpleMap = () => {
         });
       }
 
-      dispatch(addLocation({ lat, lng }));
+      dispatch(addMarker({ lat, lng }));
       dispatch(setLocationSelectionEnabled(false));
       dispatch(setCursor('grab'));
     }
@@ -36,10 +51,10 @@ const SimpleMap = () => {
 
   const renderMarkers = useMemo(
     () =>
-      locations.map((marker, index) => (
+      markers.map((marker, index) => (
         <Marker key={index} longitude={marker.lng} latitude={marker.lat} />
       )),
-    [locations]
+    [markers]
   );
 
   return (
@@ -60,6 +75,12 @@ const SimpleMap = () => {
             hash={false}
           >
             {renderMarkers}
+
+            {isSourceVisible && (
+              <Source id="my-data" type="geojson" data={geojson}>
+                <Layer {...layerStyle} />
+              </Source>
+            )}
           </Map>
         </MapProvider>
       )}
